@@ -19,8 +19,10 @@ RegisterCommand('heal', function()
     TriggerServerEvent('heal:player') -- Trigger the server event to heal the player
 end, false)
 
--- Event handler for applying the heal
-RegisterNetEvent('heal:apply')
-AddEventHandler('heal:apply', function()
-    healPlayer() -- Call the function to heal the player
+-- Client-side heal event handler
+RegisterNetEvent('heal')
+AddEventHandler('heal', function()
+    local playerPed = PlayerPedId()
+    SetEntityHealth(playerPed, GetEntityMaxHealth(playerPed))
+    TriggerEvent('chatMessage', "You have been healed.")
 end)

@@ -8,6 +8,8 @@ author 'AcGaming'
 description 'A simple heal script for FiveM'
 version '1.0'
 
+dependency 'discord_perms'
+
 -- What to run
 client_scripts {
     'client.lua' -- The client-side script
