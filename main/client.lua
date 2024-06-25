@@ -24,5 +24,15 @@ RegisterNetEvent('heal')
 AddEventHandler('heal', function()
     local playerPed = PlayerPedId()
     SetEntityHealth(playerPed, GetEntityMaxHealth(playerPed))
-    TriggerEvent('chatMessage', "You have been healed.")
+    Notify("You have been healed!") -- Use the Notify function for consistency
+end)
+
+-- Event to display chat messages
+RegisterNetEvent('chatMessage')
+AddEventHandler('chatMessage', function(author, color, text)
+    TriggerEvent('chat:addMessage', {
+        color = color,
+        multiline = true,
+        args = { author, text }
+    })
 end)
