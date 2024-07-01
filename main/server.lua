@@ -13,7 +13,7 @@ RegisterCommand('heal', function(source, args, rawCommand)
         local roleIDs = exports.Badger_Discord_API:GetDiscordRoles(src)
         if roleIDs then
             for _, roleID in ipairs(roleIDs) do
-                if roleID == "HealerRole" then -- Change "HealerRole" to your desired Discord role ID
+                if roleID == "HealPerms" then -- Change "Heal Perms" to your desired Discord role ID
                     hasPermission = true
                     break
                 end
