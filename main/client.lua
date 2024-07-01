@@ -29,4 +29,3 @@ AddEventHandler('chatMessage', function(author, color, text)
         args = { author, text }
     })
 end)
-w
