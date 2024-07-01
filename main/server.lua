@@ -10,7 +10,17 @@ RegisterCommand('heal', function(source, args, rawCommand)
     local hasPermission = true
 
     if useDiscordPerms then
-        hasPermission = exports.DiscordAcePerms:IsRolePresent(src, "HealerRole") -- Change "HealerRole" to your desired Discord role
+        local roleIDs = exports.Badger_Discord_API:GetDiscordRoles(src)
+        if roleIDs then
+            for _, roleID in ipairs(roleIDs) do
+                if roleID == "HealerRole" then -- Change "HealerRole" to your desired Discord role ID
+                    hasPermission = true
+                    break
+                end
+            end
+        else
+            hasPermission = false
+        end
     end
 
     if not hasPermission then
@@ -44,7 +54,17 @@ AddEventHandler('heal:player', function()
     local hasPermission = true
 
     if useDiscordPerms then
-        hasPermission = exports.DiscordAcePerms:IsRolePresent(src, "HealerRole") -- Change "HealerRole" to your desired Discord role
+        local roleIDs = exports.Badger_Discord_API:GetDiscordRoles(src)
+        if roleIDs then
+            for _, roleID in ipairs(roleIDs) do
+                if roleID == "HealerRole" then -- Change "HealerRole" to your desired Discord role ID
+                    hasPermission = true
+                    break
+                end
+            end
+        else
+            hasPermission = false
+        end
     end
 
     if not hasPermission then
