@@ -10,17 +10,25 @@ RegisterCommand('heal', function(source, args, rawCommand)
     local hasPermission = true
 
     if useDiscordPerms then
-        hasPermission = exports.discord_perms:IsRolePresent(src, "HealerRole") -- Change "HealerRole" to your desired Discord role
+        hasPermission = exports.DiscordAcePerms:IsRolePresent(src, "HealerRole") -- Change "HealerRole" to your desired Discord role
     end
 
     if not hasPermission then
-        TriggerClientEvent('chatMessage', src, "^1SYSTEM", {255, 0, 0}, "You do not have permission to heal.") -- Send chat message
+        TriggerClientEvent('chat:addMessage', src, {
+            color = {255, 0, 0},
+            multiline = true,
+            args = {"SYSTEM", "You do not have permission to heal."}
+        })
         return
     end
 
     if healCooldowns[playerIdentifier] and (os.time() - healCooldowns[playerIdentifier]) < 30 then
         local timeLeft = 30 - (os.time() - healCooldowns[playerIdentifier])
-        TriggerClientEvent('chatMessage', src, "^1SYSTEM", {255, 0, 0}, "You must wait " .. timeLeft .. " seconds before healing again.") -- Send chat message
+        TriggerClientEvent('chat:addMessage', src, {
+            color = {255, 0, 0},
+            multiline = true,
+            args = {"SYSTEM", "You must wait " .. timeLeft .. " seconds before healing again."}
+        })
         return
     end
 
@@ -32,5 +40,32 @@ end, false)
 RegisterServerEvent('heal:player')
 AddEventHandler('heal:player', function()
     local src = source
+    local playerIdentifier = GetPlayerIdentifiers(src)[1]
+    local hasPermission = true
+
+    if useDiscordPerms then
+        hasPermission = exports.DiscordAcePerms:IsRolePresent(src, "HealerRole") -- Change "HealerRole" to your desired Discord role
+    end
+
+    if not hasPermission then
+        TriggerClientEvent('chat:addMessage', src, {
+            color = {255, 0, 0},
+            multiline = true,
+            args = {"SYSTEM", "You do not have permission to heal."}
+        })
+        return
+    end
+
+    if healCooldowns[playerIdentifier] and (os.time() - healCooldowns[playerIdentifier]) < 30 then
+        local timeLeft = 30 - (os.time() - healCooldowns[playerIdentifier])
+        TriggerClientEvent('chat:addMessage', src, {
+            color = {255, 0, 0},
+            multiline = true,
+            args = {"SYSTEM", "You must wait " .. timeLeft .. " seconds before healing again."}
+        })
+        return
+    end
+
+    healCooldowns[playerIdentifier] = os.time()
     TriggerClientEvent('heal', src)
 end)

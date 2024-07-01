@@ -1,4 +1,4 @@
--- __resource.lua
+-- fxmanifest.lua
 
 -- Resource metadata
 fx_version 'cerulean'
